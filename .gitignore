@@ -487,3 +487,5 @@ appsettings.*.json
 !appsettings.json
 *.env
 .env
+
+launchSettings.json
