@@ -1,34 +1,43 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using proj.dtos;
 
 namespace proj.entities
 {
     public class User
     {
+        [Column("id")]
         public int Id { get; set; }
+        [Column("email")]
         public string Email { get; set; }
+        [Column("document")]
+        public string Document { get; set; }
+        [Column("name")]
         public string Name { get; set; }
+        [Column("password")]
         public string Password { get; set; }
-
+        [Column("created_at")]
+        public DateOnly CreatedAt { get; set; }
+        [Column("active")]
+        public bool Active { get; set; }
+        
         public User()
         {
             this.Email = string.Empty;
             this.Name = string.Empty;
+            this.Document = string.Empty;
             this.Password = string.Empty;
+            this.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
+            this.Active = true;
         }
-
-        public static User ToEntity(RegisterUserDTO dto) => new User
+        public User(int id, string email, string document, string name, string password, DateOnly createdAt,  bool active)
         {
-            Id = 0,
-            Email = dto.Email,
-            Name = dto.Name,
-            Password = dto.Password
-        };
-        public static User ToEntity(UpdateUserDTO dto, int id) => new User
-        {
-            Id = id,
-            Email = dto.Email,
-            Name = dto.Name,
-            Password = dto.Password
-        };
+            Id = id;
+            Email = email;
+            Document = document;
+            Name = name;
+            Password = password;
+            this.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
+            Active = active;
+        }
     }
 }
