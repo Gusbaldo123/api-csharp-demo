@@ -7,6 +7,8 @@ namespace proj.services
         public Task<ResponseUserDTO> CreateUserAsync(RegisterUserDTO dto);
 
         public Task<ResponseUserDTO?> GetUserByIdAsync(int id);
+        
+        public Task<List<ResponseUserDTO>> GetAllUsersAsync();
 
         public Task<ResponseUserDTO?> UpdateUserAsync(int id, UpdateUserDTO dto);
 

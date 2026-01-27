@@ -12,7 +12,8 @@ namespace proj.services
         }
         public async Task<ResponseUserDTO> CreateUserAsync(RegisterUserDTO user)
         {
-            User createdUser = await _userRepository.AddUserAsync(User.ToEntity(user));
+            user.Password = HashUtils.HashString(user.Password);
+            User createdUser = await _userRepository.AddUserAsync(RegisterUserDTO.ToEntity(user));
             return ResponseUserDTO.FromEntity(createdUser);
         }
         public async Task<ResponseUserDTO?> GetUserByIdAsync(int id)
@@ -22,9 +23,14 @@ namespace proj.services
                 return ResponseUserDTO.FromEntity(foundUser);
             return null;
         }
+        public async Task<List<ResponseUserDTO>> GetAllUsersAsync()
+        {
+            List<User> users =  await _userRepository.GetAllUsersAsync();
+            return users.Select(user => ResponseUserDTO.FromEntity(user)).ToList();
+        }
         public async Task<ResponseUserDTO?> UpdateUserAsync(int id, UpdateUserDTO user)
         {
-            User? updatedUser = await _userRepository.UpdateUserAsync(id, User.ToEntity(user, id));
+            User? updatedUser = await _userRepository.UpdateUserAsync(id, UpdateUserDTO.ToEntity(user, id));
             if (updatedUser != null)
                 return ResponseUserDTO.FromEntity(updatedUser);
             return null;

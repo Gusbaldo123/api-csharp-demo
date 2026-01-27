@@ -41,6 +41,12 @@ namespace proj.controllers
                 
             return Ok(user);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userServices.GetAllUsersAsync();
+            return Ok(users);
+        }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDTO user)
         {
